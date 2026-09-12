@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "exportedAt": "2026-09-12T14:30:00.000Z",
+  "templates": [
+    {
+      "id": "tpl_m3k2p1_a8x2f",
+      "name": "밈 카드 1",
+      "ratio": "1:1",
+      "text": {
+        "content": "오늘도\n출근 완료 😎",
+        "size": 90,
+        "color": "#ffffff",
+        "x": 50,
+        "y": 50,
+        "align": "center",
+        "weight": 900,
+        "stroke": 6,
+        "strokeColor": "#000000"
+      },
+      "bgColor": "#222222",
+      "imageData": null
+    },
+    {
+      "id": "tpl_m3k2p1_b9y3g",
+      "name": "SNS 카드",
+      "ratio": "4:5",
+      "text": {
+        "content": "SNS 카드\n새 소식이 도착했어요 ✨",
+        "size": 70,
+        "color": "#ffffff",
+        "x": 50,
+        "y": 40,
+        "align": "center",
+        "weight": 700,
+        "stroke": 0,
+        "strokeColor": "#000000"
+      },
+      "bgColor": "#5b8cff",
+      "imageData": null
+    },
+    {
+      "id": "tpl_m3k2p1_c4z7h",
+      "name": "세로 스토리",
+      "ratio": "9:16",
+      "text": {
+        "content": "세로 스토리\n오늘의 한 컷",
+        "size": 80,
+        "color": "#ffffff",
+        "x": 50,
+        "y": 80,
+        "align": "center",
+        "weight": 900,
+        "stroke": 4,
+        "strokeColor": "#000000"
+      },
+      "bgColor": "#7c5cff",
+      "imageData": null
+    }
+  ]
+}

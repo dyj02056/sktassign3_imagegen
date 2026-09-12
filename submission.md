@@ -203,6 +203,26 @@ final_03_9x16.png ← 9:16 비율, 문구 C
 > |---|---|---|---|
 > | final_0X_...png | 아니오 | https://... | CC0 / CC-BY 4.0 / Unsplash License / 수업 제공 자료 등 |
 
+### C-2-2. JSON 3종 검증 (T03-C22 · C23 · C24)
+
+| 파일 | 종류 | 기대 결과 | 실제 결과 |
+|---|---|---|---|
+| json_valid.json | 정상 JSON | 템플릿 복원 (0 → 3개) | ✅ 통과 |
+| json_broken_syntax.json | 문법 손상 (닫는 중괄호 누락) | "JSON 문법 오류 — 기존 템플릿 유지" / 개수 변화 없음 | ✅ 통과 |
+| json_missing_templates.json | templates 키 누락 | "필수 항목(templates) 누락 — 기존 템플릿 유지" / 개수 변화 없음 | ✅ 통과 |
+
+**검증 절차**
+1. 정상 JSON 가져오기 → 템플릿 목록 3개 표시 확인 (T03-C22)
+2. 손상 JSON 가져오기 → 빨간 토스트 + 기존 템플릿 개수 유지 확인 (T03-C23)
+3. 필수 누락 JSON 가져오기 → 빨간 토스트 + 기존 템플릿 개수 유지 확인 (T03-C24)
+
+**증거**
+- evidence/json/json_valid.json
+- evidence/json/json_broken_syntax.json
+- evidence/json/json_missing_templates.json
+- 각 시나리오 스크린샷
+
+
 ---
 
 ### C-3. 공개 안전 점검 (T03-C28 · C29 · C30)
@@ -230,6 +250,9 @@ final_03_9x16.png ← 9:16 비율, 문구 C
 - GPS / Location / 카메라 / 촬영 정보 태그: 0건
 - 결론: T03-C28 통과
 - 증거: evidence/exif_final_03.png (스크린샷)
+
+
+
 
 **T03-C29 — 공개 화면·제출물 개인정보 0건**
 - 코드에 사용자 이름·이메일·전화 등 하드코딩 없음.
