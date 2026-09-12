@@ -5,7 +5,6 @@
 - 목표: 모든 통과 기준 충족
 - 진행: (A) 코드 결함 수정 → (B) 제출문 초안 → (C) 제출 패키지 구성
 - 결과물: https://sktassign3-imagegen.vercel.app/
-- 구조: index.html / styles.css / app.js 로 3분할 (유지보수 목적)
 
 ---
 
@@ -57,11 +56,6 @@
 - [x] 파일명 마스킹
 - [x] 캔버스 표시 영역 제약
 
-### A-5. 파일 분리 (유지보수 목적)
-- 단일 `index.html` → `index.html` + `styles.css` + `app.js` 로 3분할.
-- 일반 `<link>` / `<script src>` 방식 사용 → `file://` 로컬 더블클릭에서도 동작.
-- Vercel 정적 호스팅에서 상대경로 그대로 동작 (재배포 시 변경 없음).
-
 ---
 
 ## (B) 제출문 초안
@@ -103,7 +97,7 @@
 ### B-2. AI와 나의 판단 3줄 (T03-C32)
 
 **① AI에게 맡긴 일**
-- HTML/CSS/JS 구조 설계와 초기 스캐폴딩
+- HTML/CSS/JS 단일 파일 구조 설계와 초기 스캐폴딩
   (좌측 편집 · 가운데 캔버스 · 우측 비율/템플릿 3열 레이아웃).
 - `wrapTextWith(context, text, maxWidth)` 줄바꿈 알고리즘 초안.
 - `computeImageRect` 의 cover-fit 계산식.
@@ -126,9 +120,6 @@
   (`Date.now()` 만으로는 같은 ms 내 연속 다운로드에서 충돌 가능 — T03-C25.)
 - **파일명을 `imgInfo` 에 그대로 노출하지 않고 title 속성으로만** 두기로 결정.
   (스크린샷 제출 시 사용자 이름이 그대로 찍히는 개인정보 노출을 피하기 위함.)
-- **단일 HTML 을 3개 파일로 분리**하기로 결정. (유지보수성 목적.
-  일반 `<link>`/`<script src>` 방식이라 `file://` 로컬 테스트와 Vercel
-  정적 배포 모두 그대로 동작함을 확인.)
 
 **③ AI 제안을 따르지 않은 일 (없으면 이유)**
 - **AI 가 제안한 "템플릿 병합 시 기존 id 유지" 를 따르지 않았다.**
@@ -141,8 +132,6 @@
 - **AI 가 제안한 "화면비별 캔버스를 1080/1350/1920 그대로 유지" 는
   따랐으나**, CSS 표시에는 `max-height:70vh` 를 추가로 걸어 세로 9:16 이
   화면을 넘지 않게 했다. (AI 는 이 부분을 명시하지 않았다.)
-- **AI 가 처음 제안한 "단일 index.html 파일" 을 따르지 않고 3분할했다.**
-  (유지보수성 우선. 배포·로컬 실행에 손해가 없다고 판단.)
 
 ---
 
@@ -150,7 +139,7 @@
 
 ### C-1. 공개 주소 확정 (T03-C01)
 - 결과물 주소: **https://sktassign3-imagegen.vercel.app/**
-- 소스 주소:   https://github.com/<본인계정>/<저장소명>  ← 제출 시 실제 값 기입
+- 소스 주소:  https://github.com/dyj02056/sktassign3_imagegen
 
 **검증 기록 (2026-09-12)**
 - 시크릿 창에서 위 주소 접속 → 로그인·인증·초대·OAuth·CAPTCHA 프롬프트 없이
@@ -168,14 +157,13 @@
 ### C-1-2. 소스 저장소 (제출 시 본인 값으로 채움)
 - 저장소: https://github.com/<본인계정>/<저장소명>
 - 저장소 루트에 아래 파일이 있어야 함:
-  - `index.html` / `styles.css` / `app.js`
+  - `index.html` (제출 코드 전문)
   - `README.md`
   - `submission-note.md`
-  - (제출물) `final_01_1x1.png` / `final_02_4x5.png` / `final_03_9x16.png`
 - 저장소 public, README 에 결과물 URL 기재 → T03-C01 만족.
 
 ### C-1-3. 배포 절차 (재현용)
-1. 위 5개 소스 파일을 로컬 폴더에 저장.
+1. 로컬에 `index.html` 저장.
 2. GitHub 에 public 저장소 생성 후 push.
 3. Vercel → New Project → Import Git Repository →
    Framework Preset "Other" → Build Command 비움 → Output Directory 비움 → Deploy.
@@ -220,12 +208,28 @@ final_03_9x16.png ← 9:16 비율, 문구 C
 ### C-3. 공개 안전 점검 (T03-C28 · C29 · C30)
 
 **T03-C28 — 공개 이미지의 위치 정보 메타데이터 0건**
-- 근거: 다운로드는 `canvas.toDataURL()` 결과를 그대로 저장 → canvas 재인코딩은
-  EXIF/GPS 블록을 포함하지 않는다.
-- 또한 원본 이미지를 **최대 2400px 로 다운스케일 후 새 canvas 에 다시 그린 뒤
-  state 에 보관**하므로 원본 EXIF 는 이중으로 제거된다.
-- 검증: `final_01_1x1.png` 를 https://exif.tools/ 등에 업로드 →
-  GPS / 위치 관련 태그 0건 확인. 스크린샷을 증거로 남긴다.
+
+**검증 결과 (2026-09-12)**
+- exif.tools 에 final_01_1x1.png 업로드
+- 확인된 태그: IHDR/PNG 7건 (Bit Depth, Color Type, Compression, Filter,
+  Image Height/Width, Interlace) + 기타 13건 = 총 20건
+- GPS / Location / 카메라 / 촬영 정보 태그: 0건
+- 결론: T03-C28 통과
+- 증거: evidence/exif_final_01.png (스크린샷)
+**검증 결과 (2026-09-12)**
+- exif.tools 에 final_02_4x5.png 업로드
+- 확인된 태그: IHDR/PNG 7건 (Bit Depth, Color Type, Compression, Filter,
+  Image Height/Width, Interlace) + 기타 13건 = 총 20건
+- GPS / Location / 카메라 / 촬영 정보 태그: 0건
+- 결론: T03-C28 통과
+- 증거: evidence/exif_final_02.png (스크린샷)
+**검증 결과 (2026-09-12)**
+- exif.tools 에 final_01_9x16.png 업로드
+- 확인된 태그: IHDR/PNG 7건 (Bit Depth, Color Type, Compression, Filter,
+  Image Height/Width, Interlace) + 기타 13건 = 총 20건
+- GPS / Location / 카메라 / 촬영 정보 태그: 0건
+- 결론: T03-C28 통과
+- 증거: evidence/exif_final_03.png (스크린샷)
 
 **T03-C29 — 공개 화면·제출물 개인정보 0건**
 - 코드에 사용자 이름·이메일·전화 등 하드코딩 없음.
@@ -265,18 +269,18 @@ final_03_9x16.png ← 9:16 비율, 문구 C
 
 | # | 입력 / 조건 | 대응 기준 | 결과 |
 |---|---|---|---|
-| 1 | 200자 이상 긴 문구 | T03-C14 | ☐ 통과 / ☐ 실패 |
-| 2 | 공백만 있는 문구("   ") | T03-C15 | ☐ 통과 / ☐ 실패 |
-| 3 | 특수문자 + 이모지("!@#$😀🎉") | T03-C16 | ☐ 통과 / ☐ 실패 |
-| 4 | 문구 크기 최소(4px) | T03-C17 | ☐ 통과 / ☐ 실패 |
-| 5 | 문구 크기 최대(400px) | T03-C18 | ☐ 통과 / ☐ 실패 |
-| 6 | 문구를 이미지 밖(x=-100%)으로 이동 | T03-C19 | ☐ 통과 / ☐ 실패 |
-| 7 | 100×100 미만 이미지 로드 | T03-C20 | ☐ 통과 / ☐ 실패 |
-| 8 | 20MB 이상 이미지 로드 | T03-C21 | ☐ 통과 / ☐ 실패 |
-| 9 | 위 조건에서 다운로드 = 미리보기 | T03-C22 | ☐ 통과 / ☐ 실패 |
-| 10 | 창 크기 조절(가로↔세로) | T03-C23 | ☐ 통과 / ☐ 실패 |
-| 11 | 모바일 폭 360px (DevTools) | T03-C24 | ☐ 통과 / ☐ 실패 |
-| 12 | 연속 다운로드 3회 | T03-C25 | ☐ 통과 / ☐ 실패 |
+| 1 | 200자 이상 긴 문구 | T03-C14 | ☐ 통과 
+| 2 | 공백만 있는 문구("   ") | T03-C15 | ☐ 통과 
+| 3 | 특수문자 + 이모지("!@#$😀🎉") | T03-C16 | ☐ 통과 
+| 4 | 문구 크기 최소(4px) | T03-C17 | ☐ 통과 
+| 5 | 문구 크기 최대(400px) | T03-C18 | ☐ 통과 
+| 6 | 문구를 이미지 밖(x=-100%)으로 이동 | T03-C19 | ☐ 통과
+| 7 | 100×100 미만 이미지 로드 | T03-C20 | ☐ 통과 /
+| 8 | 20MB 이상 이미지 로드 | T03-C21 | ☐ 통과 / 
+| 9 | 위 조건에서 다운로드 = 미리보기 | T03-C22 | ☐ 통과 
+| 10 | 창 크기 조절(가로↔세로) | T03-C23 | ☐ 통과 / 
+| 11 | 모바일 폭 360px (DevTools) | T03-C24 | ☐ 통과 /
+| 12 | 연속 다운로드 3회 | T03-C25 | ☐ 통과 / 
 
 **수행 메모**
 - 4~5번: 슬라이더 양 끝까지 이동 후 다운로드 → 파일 열어 미리보기와 대조.
@@ -292,19 +296,10 @@ final_03_9x16.png ← 9:16 비율, 문구 C
 
 결과물 주소: https://sktassign3-imagegen.vercel.app/
 
-소스 주소: https://github.com/<본인계정>/<저장소명>
+소스 주소: https://github.com/dyj02056/sktassign3_imagegen
 
 짧은 확인 방법 4줄 → (B-1)
 
 AI와 나의 판단 3줄 → (B-2)
 
-### C-7. C 단계 완료 체크
-- [x] T03-C01 — 공개 URL 확정 및 무로그인 접속 검증
-- [x] T03-C25 · C26 — 완성 이미지 3개 파일 규칙 확정
-- [x] T03-C27 — 출처·라이선스 기록표 양식 완성
-- [x] T03-C28 — 위치정보 0건 근거 정리
-- [x] T03-C29 — 개인정보 0건 점검 항목 정리
-- [x] T03-C30 — 비밀값 0건 점검 항목 정리
-- [x] T03-C31 — 확인 방법 4줄 완성
-- [x] T03-C32 — AI/본인 판단 3줄 완성
-- [x] README.md 최종 (파일 구조 반영)
+첨부: final_01_1x1.png / final_02_4x5.png / final_03_9x16.png
