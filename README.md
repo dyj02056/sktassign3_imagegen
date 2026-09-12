@@ -1,3 +1,5 @@
+
+
 # 짤·카드 스튜디오
 
 이미지와 문구를 조합해 밈·카드·SNS 게시용 이미지를 만들고 PNG 또는 JPEG 로
@@ -5,7 +7,7 @@
 
 ## 결과물
 - 공개 편집기: https://sktassign3-imagegen.vercel.app/
-- 소스: (https://github.com/dyj02056/sktassign3_imagegen)
+- 소스: 이 저장소
 
 ## 확인 방법 (3단계)
 1. 위 주소를 **시크릿 창**에서 연다 (로그인 필요 없음).
@@ -23,6 +25,18 @@
 - 손상 JSON: **"JSON 문법 오류 — 기존 템플릿 유지"**.
 - 필수 항목 누락 JSON: **"필수 항목(templates) 누락 — 기존 템플릿 유지"**.
 
+## 폴더 구조
+sktassign3_imagegen/
+├── index.html # HTML 뼈대
+├── styles.css # 전체 스타일
+├── app.js # 전체 로직
+├── README.md # 이 문서
+├── submission-note.md # 수정 과정 및 통과 기준 대응 기록
+├── final_01_1x1.png # 완성 이미지 ① (사용자 생성)
+├── final_02_4x5.png # 완성 이미지 ② (사용자 생성)
+└── final_03_9x16.png # 완성 이미지 ③ (사용자 생성)
+
+
 ## 기능
 - PNG / JPEG / WebP 이미지 로드, 그 외 형식 거부 (거부 이유 표시, 기존 작업 유지)
 - 이미지 드래그&드롭 지원
@@ -33,13 +47,5 @@
 - 위치정보 등 **메타데이터 미포함 저장** (canvas 재인코딩 + 2400px 다운스케일)
 - 모바일 360px 대응 (1열 레이아웃)
 
-## 파일
-- `index.html` — 전체 앱 (단일 파일, 빌드 없음, 무의존성)
-- `README.md` — 이 문서
-- `submission-note.md` — 수정 과정 및 통과 기준 대응 기록
-
-## 배포 재현
-1. 이 저장소를 GitHub public 으로 push.
-2. Vercel → New Project → Import Git Repository →
-   Framework Preset: **Other**, Build Command 비움, Output Directory 비움 → Deploy.
-3. 배포 URL 을 이 문서 상단에 기입.
+## 로컬 실행
+index.html 을 브라우저에서 열면 됩니다 (file:// 가능, 서버 불필요)
