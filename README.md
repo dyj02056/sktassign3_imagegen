@@ -5,7 +5,7 @@
 
 ## 결과물
 - 공개 편집기: https://sktassign3-imagegen.vercel.app/
-- 소스: 이 저장소
+- 소스: (https://github.com/dyj02056/sktassign3_imagegen)
 
 ## 확인 방법 (3단계)
 1. 위 주소를 **시크릿 창**에서 연다 (로그인 필요 없음).
